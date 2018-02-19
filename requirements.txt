@@ -1,0 +1,2 @@
+thonny>=2.2.0b1
+pyserial
