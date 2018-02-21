@@ -10,5 +10,6 @@ class CircuitPythonConfigPage(MicroPythonConfigPage):
     pass
 
 def load_early_plugin():
+    get_workbench().set_default("CircuitPython.port", "auto")
     get_workbench().add_backend("CircuitPython", CircuitPythonProxy, 
                                 "CircuitPython", CircuitPythonConfigPage)
