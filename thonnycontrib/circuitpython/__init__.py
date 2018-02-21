@@ -11,9 +11,6 @@ class CircuitPythonProxy(MicroPythonProxy):
     def firmware_filetypes(self):
         return [('*.bin files', '.bin'), ('*.uf2 files', '.uf2'), ('all files', '.*')]
     
-    def _get_volume_name(self):
-        return os.path.join(os.path.dirname(__file__), "api_stubs")
-    
     def _get_main_script_path(self):
         # https://learn.adafruit.com/welcome-to-circuitpython/creating-and-editing-code#naming-your-program-file
         files = self._list_files()
