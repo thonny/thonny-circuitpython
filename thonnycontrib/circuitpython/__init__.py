@@ -1,7 +1,7 @@
 import os.path
 
 from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage
-from thonny.globals import get_workbench
+from thonny import get_workbench
 
 class CircuitPythonProxy(MicroPythonProxy):
     def __init__(self, clean):
@@ -39,7 +39,7 @@ class CircuitPythonProxy(MicroPythonProxy):
 class CircuitPythonConfigPage(MicroPythonConfigPage):
     pass
 
-def load_early_plugin():
+def load_plugin():
     get_workbench().set_default("CircuitPython.port", "auto")
     get_workbench().add_backend("CircuitPython", CircuitPythonProxy, 
                                 "CircuitPython", CircuitPythonConfigPage)
