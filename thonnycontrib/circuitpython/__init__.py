@@ -11,7 +11,7 @@ import threading
 import json
 import subprocess
 import time
-from tkinter.messagebox import showerror, showinfo
+from tkinter.messagebox import showerror, showinfo, askyesno
 
 _asset_names_by_models = {
     "CPlay Express" : "circuitplayground_express",
@@ -107,7 +107,7 @@ class FlashingDialog(tk.Toplevel):
         command_bar.grid(row=4, column=0, columnspan=3, sticky="nsew")
         command_bar.columnconfigure(0, weight=1)
         
-        self._install_button = ttk.Button(command_bar, text="Install", command=self._start_install, width=15)
+        self._install_button = ttk.Button(command_bar, text="Install", command=self._start_install, width=20)
         self._install_button.grid(row=0, column=1, pady=15, padx=15, sticky="ne")
         self._install_button.focus_set()
         
@@ -260,8 +260,17 @@ class FlashingDialog(tk.Toplevel):
     
     def _start_install(self):
         assert self._firmware_path
+        assert self._device_info
         
-        # TODO: check suitability for current model
+        asset_name_sub = _asset_names_by_models[self._device_info["model"]] 
+        if asset_name_sub.lower() not in self._firmware_path.lower():
+            if not askyesno("Confusion",
+                            "For this device it is expected that firmware file name contains\n\n"
+                              + "    %s\n\n" % asset_name_sub
+                              + "Are you sure you want to continue?"):
+                return
+            
+        
         
         dest_path = os.path.join(self._device_info["volume"], 
                                    os.path.basename(self._firmware_path))
