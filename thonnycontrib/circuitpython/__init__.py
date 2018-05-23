@@ -47,13 +47,6 @@ class CircuitPythonProxy(MicroPythonProxy):
     
     def _get_fs_mount_name(self):
         return "CIRCUITPY"
-        
-    def _get_bootloader_mount_name(self):
-        boot_names = {
-            "Adafruit CircuitPlayground Express with samd21g18" : "CPLAYBOOT",
-            "" : "TRINKETBOOT",
-        }
-        return boot_names.get(self._uname["machine"], None) 
     
 
 class CircuitPythonConfigPage(MicroPythonConfigPage):
