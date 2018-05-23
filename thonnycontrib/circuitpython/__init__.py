@@ -12,6 +12,7 @@ import json
 import subprocess
 import time
 from tkinter.messagebox import showerror, showinfo, askyesno
+from thonny.misc_utils import list_volumes
 
 _asset_names_by_models = {
     "CPlay Express" : "circuitplayground_express",
@@ -175,7 +176,7 @@ class FlashingDialog(tk.Toplevel):
     
     def _update_device_info(self):
         info_file_name = "INFO_UF2.TXT"
-        suitable_volumes = {vol for vol in _list_volumes() 
+        suitable_volumes = {vol for vol in list_volumes() 
                             if os.path.exists(os.path.join(vol, info_file_name))}
         
         if len(suitable_volumes) == 0:
@@ -309,39 +310,6 @@ class FlashingDialog(tk.Toplevel):
                 print(self._latest_release_data)
         
         threading.Thread(target=work).start()
-
-def _list_volumes():
-    "Adapted from https://github.com/ntoll/uflash/blob/master/uflash.py"
-    if os.name == 'posix':
-        # 'posix' means we're on Linux or OSX (Mac).
-        # Call the unix "mount" command to list the mounted volumes.
-        mount_output = subprocess.check_output('mount').splitlines()
-        return [x.split()[2].decode("utf-8") for x in mount_output]
-    
-    elif os.name == 'nt':
-        # 'nt' means we're on Windows.
-        import ctypes
-
-        #
-        # In certain circumstances, volumes are allocated to USB
-        # storage devices which cause a Windows popup to raise if their
-        # volume contains no media. Wrapping the check in SetErrorMode
-        # with SEM_FAILCRITICALERRORS (1) prevents this popup.
-        #
-        old_mode = ctypes.windll.kernel32.SetErrorMode(1)  # @UndefinedVariable
-        try:
-            volumes = []
-            for disk in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-                path = '{}:\\'.format(disk)
-                if (os.path.exists(path)):
-                    volumes.append(path)
-            
-            return volumes
-        finally:
-            ctypes.windll.kernel32.SetErrorMode(old_mode)  # @UndefinedVariable
-    else:
-        # No support for unknown operating systems.
-        raise NotImplementedError('OS "{}" not supported.'.format(os.name))
 
 
 
