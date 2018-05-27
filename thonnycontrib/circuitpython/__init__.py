@@ -2,7 +2,8 @@ import os.path
 import tkinter as tk
 from tkinter import ttk
 
-from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage
+from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage,\
+    add_micropython_backend
 from thonny import get_workbench
 from thonny.ui_utils import center_window
 from tkinter.filedialog import askopenfile, askopenfilename
@@ -27,25 +28,25 @@ class CircuitPythonProxy(MicroPythonProxy):
     def __init__(self, clean):
         MicroPythonProxy.__init__(self, clean)
         
-    @property
-    def firmware_filetypes(self):
-        return [('*.bin files', '.bin'), ('*.uf2 files', '.uf2'), ('all files', '.*')]
+    def _supports_directories(self):
+        return True
     
     def _get_main_script_path(self):
         # https://learn.adafruit.com/welcome-to-circuitpython/creating-and-editing-code#naming-your-program-file
         files = self._list_files()
         if "code.txt" in files:
-            return "code.txt"
+            return "/code.txt"
         elif "code.py" in files:
-            return "code.py"
+            return "/code.py"
         elif "main.txt" in files:
-            return "main.txt"
+            return "/main.txt"
         elif "main.py" in files:
-            return "main.py"
+            return "/main.py"
         else:
-            return "code.py"
+            return "/code.py"
     
     def _get_fs_mount_name(self):
+        # TODO: in 3.0 file system label (CIRCUITPY by default) can be changed using storage.getmount("/").label.
         return "CIRCUITPY"
     
 
@@ -180,8 +181,8 @@ class FlashingDialog(tk.Toplevel):
                 + "After connecting the device to a USB port, double-press its reset button\n"
                 + "and wait for a second.\n"
                 + "\n"
-                + "If nothing happens, then try again with longer or shorter pauses\n"
-                + "between the presses (or just a single press) until this message disappears."
+                + "If nothing happens, then try again with longer or shorter pauses between\n"
+                + "the presses (or just a single press) until this message disappears."
             )
         elif len(suitable_volumes) > 1:
             self._device_info = None
@@ -198,7 +199,7 @@ class FlashingDialog(tk.Toplevel):
                     if line.startswith("Model:"):
                         model = line[len("Model:"):].strip()
                         self._device_info = {"volume" : vol, "model" : model}
-                        device_text = "%s (%s)" % (vol, model)
+                        device_text = "%s    (%s)" % (vol, model)
                         break
                 else:
                     self._device_info = None
@@ -300,16 +301,14 @@ class FlashingDialog(tk.Toplevel):
         def work():
             with urlopen("https://api.github.com/repos/adafruit/circuitpython/releases/latest") as fp:
                 self._latest_release_data = json.loads(fp.read().decode("UTF-8"))
-                print(self._latest_release_data)
         
         threading.Thread(target=work).start()
 
 
 
 def load_plugin():
-    get_workbench().set_default("CircuitPython.port", "auto")
-    get_workbench().add_backend("CircuitPython", CircuitPythonProxy, 
-                                "CircuitPython", CircuitPythonConfigPage)
+    add_micropython_backend("CircuitPython", CircuitPythonProxy, 
+                            "CircuitPython", CircuitPythonConfigPage)
     
     get_workbench().add_command("uploadcp", "tools", "Upload CircuitPython firmware ...",
                                 FlashingDialog,
