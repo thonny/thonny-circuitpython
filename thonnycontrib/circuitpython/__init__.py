@@ -181,6 +181,7 @@ class FlashingDialog(tk.Toplevel):
             self._install_button.configure(text="Installing (%d %%)" % self._copy_progess)
         elif self._copy_progess == "done":
             self._install_button.configure(text="Installing (100%)")
+            self.update_idletasks()
             showinfo("Done", "Firmware installation is complete.\nDevice will be back in normal mode.")
             self._copy_progess = None
         else:
