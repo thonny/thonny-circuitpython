@@ -49,6 +49,26 @@ class CircuitPythonProxy(MicroPythonProxy):
         # TODO: in 3.0 file system label (CIRCUITPY by default) can be changed using storage.getmount("/").label.
         return "CIRCUITPY"
     
+    @property
+    def known_usb_vids_pids(self):
+        """Copied from https://github.com/mu-editor/mu/blob/master/mu/modes/adafruit.py"""
+        return {
+            (0x239A, 0x8015),  # Adafruit Feather M0 CircuitPython
+            (0x239A, 0x8023),  # Adafruit Feather M0 Express CircuitPython
+            (0x239A, 0x801B),  # Adafruit Feather M0 Express CircuitPython
+            (0x239A, 0x8014),  # Adafruit Metro M0 CircuitPython
+            (0x239A, 0x8019),  # Adafruit CircuitPlayground Express CircuitPython
+            (0x239A, 0x801D),  # Adafruit Gemma M0
+            (0x239A, 0x801F),  # Adafruit Trinket M0
+            (0x239A, 0x8012),  # Adafruit ItsyBitsy M0
+            (0x239A, 0x8021),  # Adafruit Metro M4
+            (0x239A, 0x8025),  # Adafruit Feather RadioFruit
+            (0x239A, 0x8026),  # Adafruit Feather M4
+            (0x239A, 0x8028),  # Adafruit pIRKey M0
+            (0x239A, 0x802A),  # Adafruit Feather 52840
+            (0x239A, 0x802C),  # Adafruit Itsy M4
+            (0x239A, 0x802E),  # Adafruit CRICKit M0
+        }
 
 class CircuitPythonConfigPage(MicroPythonConfigPage):
     pass
