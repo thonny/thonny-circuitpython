@@ -31,6 +31,7 @@ class CircuitPythonProxy(MicroPythonProxy):
     def _clean_environment_in_raw_mode(self):
         # In CP Ctrl+C cleans environment
         self._serial.write(b"\x03") 
+        self._serial.write(b"\x01") 
     
     def _supports_directories(self):
         return True
