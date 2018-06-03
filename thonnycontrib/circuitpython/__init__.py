@@ -298,11 +298,13 @@ class FlashingDialog(tk.Toplevel):
                 with open(dest_path, 'wb') as fdst:
                     copied = 0
                     while True:
-                        buf = fsrc.read(8*1024)
+                        buf = fsrc.read(16*1024)
                         if not buf:
                             break
                         
                         fdst.write(buf)
+                        fdst.flush()
+                        os.fsync(fdst)
                         copied += len(buf)
                         
                         self._copy_progess = int(copied / size * 100)                    
