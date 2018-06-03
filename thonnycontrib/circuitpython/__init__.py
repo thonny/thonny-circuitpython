@@ -28,6 +28,10 @@ class CircuitPythonProxy(MicroPythonProxy):
     def __init__(self, clean):
         MicroPythonProxy.__init__(self, clean)
         
+    def _clean_environment_in_raw_mode(self):
+        # In CP Ctrl+C cleans environment
+        self._serial.write(b"\x03") 
+    
     def _supports_directories(self):
         return True
     
