@@ -74,6 +74,17 @@ class CircuitPythonProxy(MicroPythonProxy):
             (0x239A, 0x802E),  # Adafruit CRICKit M0
         }
 
+    def _report_upload_via_mount_error(self, source, target, error):
+        self._send_error_to_shell(("Couldn't write to %s\n"
+                                   + "Original error: %s\n"
+                                   + "\n"
+                                   + "If the target directory does exist then device's filesystem may be corrupted.\n"
+                                   + "You can repair it with following code (NB! Deletes all files on the device!):\n"
+                                   + "\n"
+                                   + "import storage\n"
+                                   + "storage.erase_filesystem()\n")
+                                   % (target, error))
+    
 class CircuitPythonConfigPage(MicroPythonConfigPage):
     pass
 
