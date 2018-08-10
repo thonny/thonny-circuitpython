@@ -35,6 +35,19 @@ class CircuitPythonProxy(MicroPythonProxy):
     def _supports_directories(self):
         return True
     
+    def _get_boot_script_path(self):
+        files = self._list_files()
+        if "settings.txt" in files:
+            return "/settings.txt"
+        elif "settings.py" in files:
+            return "/settings.py"
+        elif "boot.txt" in files:
+            return "/boot.txt"
+        elif "boot.py" in files:
+            return "/boot.py"
+        else:
+            return "/boot.py"
+    
     def _get_main_script_path(self):
         # https://learn.adafruit.com/welcome-to-circuitpython/creating-and-editing-code#naming-your-program-file
         files = self._list_files()
