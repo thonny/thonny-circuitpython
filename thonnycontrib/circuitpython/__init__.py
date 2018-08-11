@@ -2,9 +2,9 @@ import os.path
 import tkinter as tk
 from tkinter import ttk
 
-from thonnycontrib.micropython import MicroPythonProxy, MicroPythonConfigPage,\
+from thonny.plugins.micropython import MicroPythonProxy, MicroPythonConfigPage,\
     add_micropython_backend
-from thonny import get_workbench
+from thonny import get_workbench, ui_utils
 from thonny.ui_utils import center_window
 from tkinter.filedialog import askopenfile, askopenfilename
 from urllib.request import urlretrieve, urlopen
@@ -273,13 +273,23 @@ class FlashingDialog(tk.Toplevel):
             return
         
         elif len(self._latest_firmware_assets) > 1:
-            showerror("Can't download",
-                      "Found several suitable downloads for this model:\n  "
-                      + "\  ".join([asset["name"] for asset in self._latest_firmware_assets]))
-            return
-        
-        name = self._latest_firmware_assets[0]["name"]
-        url = self._latest_firmware_assets[0]["browser_download_url"]
+            # TODO: delete local function and rely on one provided by ui_utils
+            name = ask_one_from_choices(self,
+                                        question="Found several alternatives for this model:",
+                                        choices=[a["name"] for a in self._latest_firmware_assets])
+            if name is None:
+                return
+            
+            url = None
+            for asset in self._latest_firmware_assets:
+                if asset["name"] == name:
+                    url = asset["browser_download_url"]
+                    break
+                
+            assert url is not None
+        else:
+            name = self._latest_firmware_assets[0]["name"]
+            url = self._latest_firmware_assets[0]["browser_download_url"]
         
         def on_progress(blocknum, bs, size):
             if self._firmware_path:
@@ -355,6 +365,59 @@ class FlashingDialog(tk.Toplevel):
         
         threading.Thread(target=work).start()
 
+
+# TODO: delete this and rely on one provided by ui_utils
+class ChoiceDialog(tk.Toplevel):
+    def __init__(self, master=None, title="Choose one", question:str="Choose one:", choices=[]):
+        super().__init__(master=master)
+        
+        self.title(title)
+        self.resizable(False, False)
+        
+        self.columnconfigure(0, weight=1)
+        
+        row = 0
+        question_label = ttk.Label(self, text=question)
+        question_label.grid(row=row, column=0, columnspan=2,
+                            sticky="w", 
+                            padx=20, pady=20)
+        row += 1
+        
+        self.var = tk.StringVar()
+        for choice in choices:
+            rb = ttk.Radiobutton(self, text=choice, variable=self.var, value=choice)
+            rb.grid(row=row, column=0, columnspan=2, 
+                    sticky="w", padx=20)
+            row += 1
+        
+        ok_button = ttk.Button(self, text="OK", command=self._ok, default="active")
+        ok_button.grid(row=row, column=0, sticky="e", pady=20)
+        
+        cancel_button = ttk.Button(self, text="Cancel", command=self._cancel)
+        cancel_button.grid(row=row, column=1, sticky="e", padx=20, pady=20)
+        
+        self.bind('<Escape>', self._cancel, True) 
+        self.bind('<Return>', self._ok, True) 
+        self.protocol("WM_DELETE_WINDOW", self._cancel)
+        
+        center_window(self, master)
+        
+    def _ok(self):
+        self.result = self.var.get()
+        if not self.result:
+            self.result = None
+            
+        self.destroy()
+    
+    def _cancel(self):
+        self.result = None
+        self.destroy()
+
+# TODO: delete this and rely on one provided by ui_utils
+def ask_one_from_choices(master=None, title="Choose one", question:str="Choose one:", choices=[]):
+    dlg = ChoiceDialog(master, title, question, choices)
+    ui_utils.show_dialog(dlg, master)
+    return dlg.result
 
 
 def load_plugin():
