@@ -424,7 +424,7 @@ def load_plugin():
     add_micropython_backend("CircuitPython", CircuitPythonProxy, 
                             "CircuitPython", CircuitPythonConfigPage)
     
-    get_workbench().add_command("uploadcp", "device", "Upload CircuitPython firmware ...",
+    get_workbench().add_command("installcp", "device", "Install CircuitPython firmware ...",
                                 FlashingDialog,
                                 group=40)
 
