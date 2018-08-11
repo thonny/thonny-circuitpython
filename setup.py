@@ -10,7 +10,7 @@ for line in open(os.path.join(setupdir, 'requirements.txt'), encoding="UTF-8"):
 
 setup(
       name="thonny-circuitpython",
-      version="0.2b1",
+      version="0.2b2",
       description="CircuitPython support for Thonny IDE",
       long_description="""Plug-in for Thonny IDE which adds CircuitPython backend. 
       
