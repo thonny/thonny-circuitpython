@@ -99,8 +99,9 @@ class CircuitPythonProxy(MicroPythonProxy):
                                    % (target, error))
     
 class CircuitPythonConfigPage(MicroPythonConfigPage):
-    pass
-
+    def _get_usb_driver_url(self):
+        return "https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython#windows-7-drivers-3-9"
+    
 class FlashingDialog(tk.Toplevel):
     def __init__(self):
         master = get_workbench()
