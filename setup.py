@@ -16,8 +16,8 @@ setup(
       
 More info: 
 
-* https://bitbucket.org/plas/thonny-circuitpython
-* https://bitbucket.org/plas/thonny/wiki/MicroPython
+* https://github.com/thonny/thonny-circuitpython
+* https://github.com/thonny/thonny/wiki/MicroPython
 * https://thonny.org
 """,
       url="https://bitbucket.org/plas/thonny-circuitpython/",
