@@ -43,6 +43,7 @@ class SPI:
     def deinit():
         pass
 
+    frequency = None
     def readinto():
         pass
 
@@ -62,9 +63,11 @@ class SPI:
 class UART:
     ''
     Parity = None
+    baudrate = None
     def deinit():
         pass
 
+    in_waiting = None
     def read():
         pass
 
@@ -72,6 +75,9 @@ class UART:
         pass
 
     def readline():
+        pass
+
+    def reset_input_buffer():
         pass
 
     def write():

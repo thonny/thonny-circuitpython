@@ -10,10 +10,11 @@ class PulseIn:
     def deinit():
         pass
 
-    maxlen = 741
+    maxlen = None
     def pause():
         pass
 
+    paused = None
     def popleft():
         pass
 

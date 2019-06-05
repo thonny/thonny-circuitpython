@@ -42,6 +42,9 @@ class LookupError:
 class MemoryError:
     ''
 
+class MpyError:
+    ''
+
 class NameError:
     ''
 
@@ -52,6 +55,9 @@ class OSError:
     ''
 
 class OverflowError:
+    ''
+
+class ReloadException:
     ''
 
 class RuntimeError:
@@ -260,28 +266,13 @@ class float:
 
 class frozenset:
     ''
-    def add():
-        pass
-
-    def clear():
-        pass
-
     def copy():
         pass
 
     def difference():
         pass
 
-    def difference_update():
-        pass
-
-    def discard():
-        pass
-
     def intersection():
-        pass
-
-    def intersection_update():
         pass
 
     def isdisjoint():
@@ -293,22 +284,10 @@ class frozenset:
     def issuperset():
         pass
 
-    def pop():
-        pass
-
-    def remove():
-        pass
-
     def symmetric_difference():
         pass
 
-    def symmetric_difference_update():
-        pass
-
     def union():
-        pass
-
-    def update():
         pass
 
 def getattr():
@@ -326,16 +305,10 @@ def hash():
 def help():
     pass
 
-def help():
-    pass
-
 def hex():
     pass
 
 def id():
-    pass
-
-def input():
     pass
 
 def input():

@@ -4,7 +4,7 @@ def exit():
     pass
 
 implementation = None
-maxsize = 1073741823
+maxsize = 2147483647
 modules = None
 path = None
 platform = 'Atmel SAMD21'

@@ -10,6 +10,7 @@ class VfsFat:
     def ilistdir():
         pass
 
+    label = None
     def mkdir():
         pass
 
@@ -41,6 +42,9 @@ class VfsFat:
         pass
 
 def erase_filesystem():
+    pass
+
+def getmount():
     pass
 
 def mount():

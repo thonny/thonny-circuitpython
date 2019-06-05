@@ -4,8 +4,9 @@ class Pin:
 
 class Processor:
     ''
-    frequency = 48000000
-    temperature = 29.6727
+    frequency = None
+    temperature = None
+    uid = None
 
 class RunMode:
     ''

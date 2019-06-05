@@ -55,3 +55,6 @@ class SPI:
     def write():
         pass
 
+    def write_readinto():
+        pass
+

@@ -1,0 +1,3 @@
+def namedtuple():
+    pass
+

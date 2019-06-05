@@ -6,6 +6,7 @@ class DigitalInOut:
 
     direction = None
     drive_mode = None
+    pull = None
     def switch_to_input():
         pass
 
