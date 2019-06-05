@@ -15,15 +15,6 @@ import time
 from tkinter.messagebox import showerror, showinfo, askyesno
 from thonny.misc_utils import list_volumes
 
-_asset_names_by_models = {
-    "CPlay Express" : "circuitplayground_express",
-    "Feather M0" : "feather_m0_express",
-    "Gemma M0" : "gemma_m0",
-    "Itsy Bitsy M0" : "itsybitsy_m0",
-    "Metro M0" : "metro_m0_express",
-    "Trinket M0" : "trinket_m0",
-}
-
 class CircuitPythonProxy(MicroPythonProxy):
     def __init__(self, clean):
         MicroPythonProxy.__init__(self, clean)
