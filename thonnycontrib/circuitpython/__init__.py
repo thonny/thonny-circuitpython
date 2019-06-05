@@ -5,7 +5,7 @@ from tkinter import ttk
 from thonny.plugins.micropython import MicroPythonProxy, MicroPythonConfigPage,\
     add_micropython_backend
 from thonny import get_workbench, ui_utils
-from thonny.ui_utils import center_window, create_url_label, show_dialog
+from thonny.ui_utils import create_url_label, show_dialog
 from tkinter.filedialog import askopenfile, askopenfilename
 from urllib.request import urlretrieve, urlopen
 import threading
