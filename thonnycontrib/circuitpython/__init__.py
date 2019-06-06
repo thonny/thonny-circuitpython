@@ -4,15 +4,10 @@ from tkinter import ttk
 
 from thonny.plugins.micropython import MicroPythonProxy, MicroPythonConfigPage,\
     add_micropython_backend
-from thonny import get_workbench, ui_utils
-from thonny.ui_utils import create_url_label, show_dialog
-from tkinter.filedialog import askopenfile, askopenfilename
-from urllib.request import urlretrieve, urlopen
+from thonny import get_workbench
+from thonny.ui_utils import create_url_label, show_dialog, askopenfilename
 import threading
-import json
-import subprocess
-import time
-from tkinter.messagebox import showerror, showinfo, askyesno
+from tkinter.messagebox import showinfo
 from thonny.misc_utils import list_volumes
 
 class CircuitPythonProxy(MicroPythonProxy):
