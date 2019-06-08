@@ -186,10 +186,10 @@ class FlashingDialog(tk.Toplevel):
                   "Device not connected or not in bootloader mode.\n"
                 + "\n"
                 + "After connecting the device to a USB port, double-press its reset button\n"
-                + "and wait for a second.\n"
+                + "and wait for couple of seconds until OS mounts it in bootloader mode.\n"
                 + "\n"
-                + "If nothing happens, then try again with longer or shorter pauses between\n"
-                + "the presses (or just a single press) until this message disappears."
+                + "If nothing happens, then try again with longer or shorter pauses between the\n"
+                + "presses (or just a single press) or wait longer until this message disappears.\n"
             )
         elif len(suitable_volumes) > 1:
             self._device_info = None
