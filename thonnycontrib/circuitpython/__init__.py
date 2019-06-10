@@ -18,9 +18,6 @@ class CircuitPythonProxy(MicroPythonProxy):
         # In CP Ctrl+C already cleaned the environment
         pass
     
-    def _supports_directories(self):
-        return True
-    
     def _get_boot_script_path(self):
         files = self._list_files()
         if "settings.txt" in files:
