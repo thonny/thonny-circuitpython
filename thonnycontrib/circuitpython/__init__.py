@@ -83,7 +83,7 @@ class CircuitPythonProxy(MicroPythonProxy):
     
 class CircuitPythonConfigPage(MicroPythonConfigPage):
     def _get_usb_driver_url(self):
-        return "https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython#windows-7-drivers-3-9"
+        return "https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython"
     
 class FlashingDialog(tk.Toplevel):
     def __init__(self):
@@ -174,7 +174,7 @@ class FlashingDialog(tk.Toplevel):
     
     def _update_device_info(self):
         info_file_name = "INFO_UF2.TXT"
-        suitable_volumes = {vol for vol in list_volumes() 
+        suitable_volumes = {vol for vol in list_volumes(skip_letters=["A"]) 
                             if os.path.exists(os.path.join(vol, info_file_name))}
         
         if len(suitable_volumes) == 0:
@@ -249,7 +249,7 @@ class FlashingDialog(tk.Toplevel):
 
 def load_plugin():
     add_micropython_backend("CircuitPython", CircuitPythonProxy, 
-                            "CircuitPython", CircuitPythonConfigPage)
+                            "CircuitPython (generic)", CircuitPythonConfigPage)
     
     get_workbench().add_command("installcp", "device", "Install CircuitPython firmware ...",
                                 lambda: show_dialog(FlashingDialog()),
